@@ -10,7 +10,7 @@ public class CategoriaResource {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String listar() {
-		return "Rest está funcionando com sucesso!";
+		return "Testando o Rest: funcionando com sucesso!";
 	}
 	
 }
