@@ -13,6 +13,7 @@ import com.henrique.cursomc.domain.Cidade;
 import com.henrique.cursomc.domain.Cliente;
 import com.henrique.cursomc.domain.Endereco;
 import com.henrique.cursomc.domain.Estado;
+import com.henrique.cursomc.domain.ItemPedido;
 import com.henrique.cursomc.domain.Pagamento;
 import com.henrique.cursomc.domain.PagamentoComCartao;
 import com.henrique.cursomc.domain.PagametoComBoleto;
@@ -25,6 +26,7 @@ import com.henrique.cursomc.respositories.CidadeRepository;
 import com.henrique.cursomc.respositories.ClienteRepository;
 import com.henrique.cursomc.respositories.EnderecoRepository;
 import com.henrique.cursomc.respositories.EstadoRepository;
+import com.henrique.cursomc.respositories.ItemPedidoRepository;
 import com.henrique.cursomc.respositories.PagamentoRepository;
 import com.henrique.cursomc.respositories.PedidoRepository;
 import com.henrique.cursomc.respositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -119,6 +124,18 @@ public class CursomcApplication implements CommandLineRunner {
 		pedidoRepository.save(Arrays.asList(pedido1, pedido2));
 		pagamentoRepository.save(Arrays.asList(pagamento1, pagamento2));
 		
+		ItemPedido itemPedido1 = new ItemPedido(pedido1, p1, 1, 0.00, 2000.0);
+		ItemPedido itemPedido2 = new ItemPedido(pedido1, p3, 1, 0.00, 80.0);
+		ItemPedido itemPedido3 = new ItemPedido(pedido2, p2, 1, 100.0, 800.0);
+		
+		pedido1.getItens().addAll(Arrays.asList(itemPedido1, itemPedido2));
+		pedido2.getItens().addAll(Arrays.asList(itemPedido3));
+		
+		p1.getItens().addAll(Arrays.asList(itemPedido1));
+		p2.getItens().addAll(Arrays.asList(itemPedido3));
+		p3.getItens().addAll(Arrays.asList(itemPedido2));
+		
+		itemPedidoRepository.save(Arrays.asList(itemPedido1, itemPedido2, itemPedido3));
 	}
 	
 }
